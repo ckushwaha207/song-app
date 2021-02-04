@@ -33,6 +33,7 @@ function CheckContainer () {
   const [searchTerm, setTerm] = React.useState("");
   const [player, setPlayer] = React.useState("pause");
   const [audio, setAudio] = React.useState("");
+
   React.useEffect(() => {
     dispatch(ActionCreator.listRequest("latest"))
   }, [dispatch])
@@ -60,6 +61,7 @@ function CheckContainer () {
       setAudio(song.previewUrl);
     }
   }
+  
   return (
     <HomeContainer>
       <SearchContainer>

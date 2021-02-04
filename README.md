@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project uses the iTune api to get te list of songs.
+Search the song either by artist | album | song.
+
+## Requirements to run the project
+npm install or yarn
 
 ## Available Scripts
 

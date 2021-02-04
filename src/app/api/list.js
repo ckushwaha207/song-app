@@ -1,6 +1,6 @@
 import { create } from 'apisauce'
  
-// define the api
+// get the song list api
 const api = create({
   baseURL: 'https://itunes.apple.com/',
 })
