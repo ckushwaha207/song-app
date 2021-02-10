@@ -27,33 +27,58 @@ const Container = styled.div`
   margin: 0px;
 `
 
+/**
+ * Renders a <strong> &lt;HomePage /> </strong> component.
+ * This is a state-ful component which have search box to search song names
+ * and show the song search results below it.
+ *
+ */
 function CheckContainer () {
-  
   const dispatch = useDispatch();
+
+  // state hooks
   const [searchTerm, setTerm] = React.useState("");
   const [player, setPlayer] = React.useState("pause");
   const [audio, setAudio] = React.useState("");
 
+  // effect hooks
   React.useEffect(() => {
     dispatch(ActionCreator.listRequest("latest"))
   }, [dispatch])
-
-  const data = useSelector(state => state.list);
-  const handleSearch = (e) => {
-    setTerm(e.target.value)
-  }
-
-  const submitSearch = () => {
-    dispatch(ActionCreator.listRequest(searchTerm))
-  }
 
   React.useEffect(() => {
     const firstSong = data.list?.results?.find(song => song.kind === "song");
     setAudio(firstSong?.previewUrl)
   }, [data.list])
 
+
+  // variable to hold the redux store's list state data
+  const data = useSelector(state => state.list);
+
+  /**
+   * This function is used to set the search term inside the term state variable.
+   *
+   * @param {Object} e - the onChange event object
+   */
+  const handleSearch = (e) => {
+    setTerm(e.target.value)
+  }
+
+  /**
+   * This function is used to dispatch the action event to make API call
+   * to return list of songs which resembles with the search term.
+   */
+  const submitSearch = () => {
+    dispatch(ActionCreator.listRequest(searchTerm))
+  }
+
+/**
+ * This function plays the selected song or pauses the song inside the player.
+ *
+ * @param {Object} song - the song object
+ * @param {Number} seq - sequence of the song
+ */
   const handlePlay = (song, seq) => {
-    console.log('song', song, seq)
     if(player === "pause") {
       setPlayer("play")
     } else {
@@ -61,7 +86,7 @@ function CheckContainer () {
       setAudio(song.previewUrl);
     }
   }
-  
+
   return (
     <HomeContainer>
       <SearchContainer>
@@ -71,14 +96,14 @@ function CheckContainer () {
         <Container>
           <Button onClick={submitSearch}>Search</Button>
         </Container>
-        
+
       </SearchContainer>
         <Container>
           {data.error?
           <p>{data.errorMessage}</p> :
           <div>
           {data.parseListLoaded ? data.list.results.map((result, i) => (
-            <Card 
+            <Card
             key={i}
             seq={i+1}
             url={result.artworkUrl100}
